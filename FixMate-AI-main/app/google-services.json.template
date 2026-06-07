@@ -1,0 +1,30 @@
+{
+  "_README_": "TEMPLATE ONLY. Download the REAL google-services.json from your Firebase project (Project Settings > Your apps > Android app) and save it as app/google-services.json. The package name MUST be com.fixmateai.",
+  "project_info": {
+    "project_number": "000000000000",
+    "project_id": "fixmate-ai-REPLACE-ME",
+    "storage_bucket": "fixmate-ai-REPLACE-ME.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:000000000000:android:0000000000000000000000",
+        "android_client_info": {
+          "package_name": "com.fixmateai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "REPLACE_WITH_REAL_FIREBASE_ANDROID_API_KEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

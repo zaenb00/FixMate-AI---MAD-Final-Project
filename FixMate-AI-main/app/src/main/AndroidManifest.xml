@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ===================== PERMISSIONS ===================== -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Reading images from the gallery. READ_MEDIA_IMAGES for API 33+, the
+         legacy READ_EXTERNAL_STORAGE for older devices (capped at API 32). -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <application
+        android:name=".FixMateApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.FixMateAI"
+        tools:targetApi="31">
+
+        <!-- Google Maps API key, injected from local.properties at build time. -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
+        <!-- ===================== ACTIVITIES ===================== -->
+        <activity
+            android:name=".ui.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.FixMateAI.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.auth.LoginActivity" android:exported="false" />
+        <activity android:name=".ui.auth.SignupActivity" android:exported="false" />
+        <activity android:name=".ui.auth.ForgotPasswordActivity" android:exported="false" />
+
+        <activity android:name=".ui.home.HomeActivity" android:exported="false" />
+
+        <activity android:name=".ui.diagnosis.CameraActivity" android:exported="false" />
+        <activity android:name=".ui.diagnosis.DiagnosisActivity" android:exported="false" />
+        <activity android:name=".ui.diagnosis.MessageGeneratorActivity" android:exported="false" />
+
+        <activity android:name=".ui.history.ReportDetailActivity" android:exported="false" />
+        <activity android:name=".ui.profile.EditProfileActivity" android:exported="false" />
+
+        <!-- FileProvider lets CameraX/the camera write to a shareable, secure URI. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
+
+</manifest>

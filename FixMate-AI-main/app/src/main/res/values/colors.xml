@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand palette -->
+    <color name="brand_primary">#1565C0</color>
+    <color name="brand_primary_dark">#0D47A1</color>
+    <color name="brand_secondary">#FF7043</color>
+    <color name="brand_accent">#26A69A</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="gray_light">#F2F4F7</color>
+    <color name="gray_medium">#9E9E9E</color>
+    <color name="text_primary">#1A1C1E</color>
+    <color name="text_secondary">#5F6368</color>
+
+    <!-- Status colors -->
+    <color name="status_pending">#F9A825</color>
+    <color name="status_progress">#1565C0</color>
+    <color name="status_resolved">#2E7D32</color>
+</resources>

@@ -1,0 +1,12 @@
+rules_version = '2';
+
+// Firebase Storage security rules for FixMate AI.
+// Damage images are stored under: damage_images/{userId}/{file}
+// Only the owner can read or write their own folder.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /damage_images/{userId}/{allPaths=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

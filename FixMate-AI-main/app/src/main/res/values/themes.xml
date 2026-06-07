@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme using Material Design 3 (DayNight = auto dark mode). -->
+    <style name="Theme.FixMateAI" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="colorPrimaryDark">@color/brand_primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/brand_secondary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor">@color/brand_primary_dark</item>
+    </style>
+
+    <!-- Splash theme: a simple branded background while the app warms up. -->
+    <style name="Theme.FixMateAI.Splash" parent="Theme.FixMateAI">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+</resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FixMate AI</string>
+
+    <!-- Auth -->
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="full_name">Full Name</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="no_account">Don\'t have an account? Sign up</string>
+    <string name="have_account">Already have an account? Login</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="reset_instructions">Enter your email and we\'ll send you a reset link.</string>
+
+    <!-- Home dashboard -->
+    <string name="welcome_title">FixMate AI</string>
+    <string name="welcome_subtitle">AI-powered home repair assistant</string>
+    <string name="capture_photo">Capture Photo</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="previous_reports">Previous Reports</string>
+    <string name="nearby_shops">Nearby Repair Shops</string>
+
+    <!-- Diagnosis -->
+    <string name="diagnosis">AI Diagnosis</string>
+    <string name="analyzing">Analyzing image with AI…</string>
+    <string name="reanalyze">Re-analyze</string>
+    <string name="save_report">Save Report</string>
+    <string name="generate_message">Generate Message</string>
+    <string name="label_severity">Severity: %1$s</string>
+    <string name="label_urgency">Urgency: %1$s</string>
+    <string name="possible_causes">Possible Causes</string>
+    <string name="recommended_repair">Recommended Repair</string>
+    <string name="required_tools">Required Tools &amp; Materials</string>
+    <string name="safety_warnings">Safety Warnings</string>
+
+    <!-- Message generator -->
+    <string name="repair_message">Repair Request Message</string>
+    <string name="copy">Copy</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="sms">SMS</string>
+    <string name="email_share">Email</string>
+
+    <!-- History -->
+    <string name="history">History</string>
+    <string name="no_reports">No reports yet. Diagnose your first repair!</string>
+    <string name="report_detail">Report Detail</string>
+    <string name="summary_label">Summary</string>
+    <string name="update_status">Update Status</string>
+    <string name="delete">Delete</string>
+
+    <!-- Stores -->
+    <string name="stores">Stores</string>
+    <string name="hardware">Hardware</string>
+    <string name="plumber">Plumber</string>
+    <string name="electrician">Electrician</string>
+    <string name="carpenter">Carpenter</string>
+    <string name="directions">Directions</string>
+    <string name="retry">Retry</string>
+    <string name="no_stores">No nearby places found.</string>
+
+    <!-- Profile -->
+    <string name="profile">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="logout">Logout</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="phone">Phone</string>
+    <string name="save">Save</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_home">Home</string>
+    <string name="nav_history">History</string>
+    <string name="nav_stores">Stores</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Misc -->
+    <string name="capture">Capture</string>
+    <string name="close">Close</string>
+</resources>

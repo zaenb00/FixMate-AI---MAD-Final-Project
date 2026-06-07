@@ -1,0 +1,17 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+**/build/
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Firebase config contains project identifiers — keep it private.
+google-services.json
+
+# API keys must never be committed.
+secrets.properties

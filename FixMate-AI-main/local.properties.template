@@ -1,0 +1,21 @@
+# =====================================================================
+# local.properties.template
+# ---------------------------------------------------------------------
+# COPY THIS FILE to "local.properties" (same folder) and fill in values.
+# local.properties is git-ignored and must NEVER be committed.
+# Android Studio also writes your SDK path here automatically.
+# =====================================================================
+
+# Path to your Android SDK (Android Studio normally fills this in for you).
+# Example (macOS): /Users/yourname/Library/Android/sdk
+sdk.dir=/Users/yourname/Library/Android/sdk
+
+# --- API KEYS (kept out of source control for security) ---
+
+# Google AI Studio key for the Gemini API. Get one free at:
+# https://aistudio.google.com/app/apikey
+GEMINI_API_KEY=PASTE_YOUR_GEMINI_API_KEY_HERE
+
+# Google Maps / Places API key from Google Cloud Console.
+# Enable "Maps SDK for Android" and "Places API".
+MAPS_API_KEY=PASTE_YOUR_GOOGLE_MAPS_API_KEY_HERE

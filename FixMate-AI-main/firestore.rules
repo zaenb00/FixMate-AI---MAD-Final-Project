@@ -1,0 +1,29 @@
+rules_version = '2';
+
+// Firebase Firestore security rules for FixMate AI.
+// Each user can only read/write their own data.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users: a user can only read/write their own profile document.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Repair reports: owner-only access. The userId field must match the caller.
+    match /repair_reports/{reportId} {
+      allow read, delete, update: if request.auth != null
+        && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null
+        && request.resource.data.userId == request.auth.uid;
+    }
+
+    // Messages: owner-only access.
+    match /messages/{messageId} {
+      allow read, delete, update: if request.auth != null
+        && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null
+        && request.resource.data.userId == request.auth.uid;
+    }
+  }
+}
