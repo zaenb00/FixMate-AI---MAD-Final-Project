@@ -7,8 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fixmateai.data.model.DiagnosisResult
+import com.fixmateai.data.model.NearbyStore
 import com.fixmateai.data.repository.DiagnosisRepository
 import com.fixmateai.data.repository.ReportRepository
+import com.fixmateai.data.repository.StoreRepository
 import com.fixmateai.utils.ImageUtils
 import com.fixmateai.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +28,8 @@ import javax.inject.Inject
 class DiagnosisViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val diagnosisRepository: DiagnosisRepository,
-    private val reportRepository: ReportRepository
+    private val reportRepository: ReportRepository,
+    private val storeRepository: StoreRepository
 ) : ViewModel() {
 
     private val _diagnosisState = MutableLiveData<Resource<DiagnosisResult>>()
@@ -36,11 +39,27 @@ class DiagnosisViewModel @Inject constructor(
     private val _saveState = MutableLiveData<Resource<String>>()
     val saveState: LiveData<Resource<String>> = _saveState
 
+    // Emits the best-matching repair service for the current diagnosis.
+    private val _suggestedService = MutableLiveData<Resource<NearbyStore>>()
+    val suggestedService: LiveData<Resource<NearbyStore>> = _suggestedService
+
     /** Sends the image to Gemini and exposes the structured result. */
     fun diagnose(imageUri: Uri) {
         _diagnosisState.value = Resource.Loading
         viewModelScope.launch {
             _diagnosisState.value = diagnosisRepository.diagnose(imageUri)
+        }
+    }
+
+    /**
+     * Finds the most suitable repair service near the user for the diagnosed
+     * issue, based on the AI's suggested tradesperson.
+     */
+    fun suggestService(lat: Double, lng: Double, diagnosis: DiagnosisResult) {
+        _suggestedService.value = Resource.Loading
+        viewModelScope.launch {
+            _suggestedService.value =
+                storeRepository.suggestBestService(lat, lng, diagnosis.tradespersonOrDefault)
         }
     }
 

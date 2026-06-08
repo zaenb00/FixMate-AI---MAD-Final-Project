@@ -38,7 +38,10 @@ data class PlacesResponse(
         @SerializedName("formattedAddress") val formattedAddress: String = "",
         @SerializedName("location") val location: Location? = null,
         @SerializedName("rating") val rating: Double = 0.0,
-        @SerializedName("currentOpeningHours") val currentOpeningHours: OpeningHours? = null
+        @SerializedName("currentOpeningHours") val currentOpeningHours: OpeningHours? = null,
+        @SerializedName("nationalPhoneNumber") val nationalPhoneNumber: String? = null,
+        @SerializedName("internationalPhoneNumber") val internationalPhoneNumber: String? = null,
+        @SerializedName("websiteUri") val websiteUri: String? = null
     )
 
     data class DisplayName(@SerializedName("text") val text: String = "")

@@ -13,10 +13,18 @@ import javax.inject.Singleton
 @Singleton
 class MessageGenerator @Inject constructor() {
 
-    fun generate(diagnosis: DiagnosisResult, userName: String = ""): String {
+    fun generate(
+        diagnosis: DiagnosisResult,
+        userName: String = "",
+        recipientName: String = ""
+    ): String {
         val builder = StringBuilder()
 
-        builder.append("Hello, ")
+        if (recipientName.isNotBlank()) {
+            builder.append("Hello $recipientName team, ")
+        } else {
+            builder.append("Hello, ")
+        }
         builder.append("I need help with a home repair issue. ")
 
         if (!diagnosis.summary.isNullOrBlank()) {

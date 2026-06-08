@@ -33,13 +33,15 @@ object Constants {
     // Fields we want back (keeps the response small and billing in the cheap tier).
     const val PLACES_FIELD_MASK =
         "places.id,places.displayName,places.formattedAddress,places.location," +
-            "places.rating,places.currentOpeningHours.openNow"
+            "places.rating,places.currentOpeningHours.openNow," +
+            "places.nationalPhoneNumber,places.internationalPhoneNumber,places.websiteUri"
 
     // ---- Intent extra keys ----
     const val EXTRA_IMAGE_URI = "extra_image_uri"
     const val EXTRA_REPORT = "extra_report"
     const val EXTRA_DIAGNOSIS = "extra_diagnosis"
     const val EXTRA_MESSAGE_TEXT = "extra_message_text"
+    const val EXTRA_STORE = "extra_store"
 
     // ---- The prompt sent to Gemini for damage diagnosis ----
     val DIAGNOSIS_PROMPT = """

@@ -17,5 +17,13 @@ data class NearbyStore(
     val rating: Double,
     val isOpenNow: Boolean?,
     /** Straight-line distance from the user in metres, filled in client-side. */
-    val distanceMeters: Float
-) : Parcelable
+    val distanceMeters: Float,
+    /** Phone number from Places, if the place publishes one. */
+    val phoneNumber: String? = null,
+    /** Website URL from Places, if available. */
+    val websiteUri: String? = null
+) : Parcelable {
+
+    /** True when we have at least one way to reach this place. */
+    val hasContact: Boolean get() = !phoneNumber.isNullOrBlank() || !websiteUri.isNullOrBlank()
+}

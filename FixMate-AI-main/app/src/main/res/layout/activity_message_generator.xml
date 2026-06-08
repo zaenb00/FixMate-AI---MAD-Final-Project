@@ -26,6 +26,16 @@
             android:orientation="vertical"
             android:padding="@dimen/spacing_md">
 
+            <TextView
+                android:id="@+id/tvRecipient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_sm"
+                android:textColor="@color/brand_primary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

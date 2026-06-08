@@ -72,13 +72,57 @@ class StoreRepository @Inject constructor(
                     longitude = loc.longitude,
                     rating = place.rating,
                     isOpenNow = place.currentOpeningHours?.openNow,
-                    distanceMeters = distance
+                    distanceMeters = distance,
+                    phoneNumber = place.nationalPhoneNumber ?: place.internationalPhoneNumber,
+                    websiteUri = place.websiteUri
                 )
             }.sortedBy { it.distanceMeters }
 
             Resource.Success(stores)
         } catch (e: Exception) {
             Resource.Error(e.localizedMessage ?: "Failed to find nearby stores.", e)
+        }
+    }
+
+    /**
+     * Finds the single most suitable repair service near the user for the given
+     * AI-suggested tradesperson (e.g. "plumber"). Prefers places that are open
+     * now, then the closest. Returns an error if nothing relevant is nearby.
+     */
+    suspend fun suggestBestService(
+        userLat: Double,
+        userLng: Double,
+        tradesperson: String
+    ): Resource<NearbyStore> {
+        val keyword = keywordForTradesperson(tradesperson)
+        return when (val result = findNearby(userLat, userLng, keyword)) {
+            is Resource.Success -> {
+                val best = result.data
+                    .sortedWith(
+                        compareByDescending<NearbyStore> { it.isOpenNow == true }
+                            .thenBy { it.distanceMeters }
+                    )
+                    .firstOrNull()
+                if (best != null) Resource.Success(best)
+                else Resource.Error("No matching repair service found nearby.")
+            }
+            is Resource.Error -> result
+            else -> Resource.Error("No matching repair service found nearby.")
+        }
+    }
+
+    /** Maps the AI's free-text tradesperson hint to a Places search keyword. */
+    private fun keywordForTradesperson(tradesperson: String): String {
+        val t = tradesperson.lowercase()
+        return when {
+            t.contains("plumb") -> "plumber"
+            t.contains("electric") -> "electrician"
+            t.contains("carpent") || t.contains("wood") -> "carpenter"
+            t.contains("paint") -> "painter"
+            t.contains("roof") -> "roofing contractor"
+            t.contains("hvac") || t.contains("air") || t.contains("heating") -> "HVAC repair"
+            t.contains("handy") || t.contains("general") -> "handyman"
+            else -> "home repair service"
         }
     }
 

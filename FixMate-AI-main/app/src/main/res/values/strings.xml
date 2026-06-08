@@ -36,12 +36,21 @@
     <string name="required_tools">Required Tools &amp; Materials</string>
     <string name="safety_warnings">Safety Warnings</string>
 
+    <!-- Recommended repair service -->
+    <string name="recommended_service">Recommended Repair Service</string>
+    <string name="finding_service">Finding the best repair service near you…</string>
+    <string name="no_service_found">No matching repair service found nearby.</string>
+    <string name="draft_message">Draft message to this service</string>
+    <string name="service_contact">Contact: %1$s</string>
+    <string name="location_needed_for_service">Allow location to get a recommended repair service nearby.</string>
+
     <!-- Message generator -->
     <string name="repair_message">Repair Request Message</string>
     <string name="copy">Copy</string>
     <string name="whatsapp">WhatsApp</string>
     <string name="sms">SMS</string>
     <string name="email_share">Email</string>
+    <string name="to_recipient">To: %1$s</string>
 
     <!-- History -->
     <string name="history">History</string>
