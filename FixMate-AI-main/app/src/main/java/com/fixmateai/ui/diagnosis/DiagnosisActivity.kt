@@ -107,6 +107,28 @@ class DiagnosisActivity : AppCompatActivity() {
         binding.btnDraftMessage.setOnClickListener {
             openMessageGenerator(store = suggestedStore)
         }
+        binding.btnSendToPro.setOnClickListener { openProviderDirectory() }
+    }
+
+    /**
+     * Opens the in-app provider directory pre-filtered to the AI's suggested
+     * trade, carrying the diagnosis summary forward so the request is pre-filled.
+     */
+    private fun openProviderDirectory() {
+        val diagnosis = currentDiagnosis ?: return
+        val intent = Intent(this, com.fixmateai.ui.directory.ProviderDirectoryActivity::class.java)
+        intent.putExtra(Constants.EXTRA_TRADE_FILTER, matchTrade(diagnosis.tradespersonOrDefault))
+        intent.putExtra(Constants.EXTRA_DIAGNOSIS_SUMMARY, diagnosis.summaryOrDefault)
+        startActivity(intent)
+    }
+
+    /** Maps the AI's free-text tradesperson to one of our known trade labels. */
+    private fun matchTrade(suggested: String): String? {
+        val s = suggested.lowercase()
+        return Constants.TRADES.firstOrNull { trade ->
+            val key = trade.lowercase()
+            s.contains(key) || key.contains(s)
+        }
     }
 
     private fun openMessageGenerator(store: NearbyStore?) {
@@ -193,10 +215,46 @@ class DiagnosisActivity : AppCompatActivity() {
         binding.tvTools.text = d.toolsText
         binding.tvSafety.text = d.safetyText
 
+        bindVerdict(d)
+        bindSteps(d)
+
         // Enable actions now that we have a result.
+        binding.btnSendToPro.show(true)
         binding.btnSave.show(true)
         binding.btnGenerateMessage.show(true)
         binding.btnReanalyze.show(true)
+    }
+
+    /** DIY-vs-hire banner derived from the AI's canDiy flag + severity. */
+    private fun bindVerdict(d: DiagnosisResult) {
+        val diy = d.isDiyFriendly
+        binding.verdictBanner.visible()
+        binding.verdictBanner.backgroundTintList = android.content.res.ColorStateList.valueOf(
+            androidx.core.content.ContextCompat.getColor(
+                this, if (diy) com.fixmateai.R.color.success_light else com.fixmateai.R.color.warning_light
+            )
+        )
+        binding.tvVerdictTitle.setText(
+            if (diy) com.fixmateai.R.string.diy_friendly_title else com.fixmateai.R.string.hire_pro_title
+        )
+        binding.tvVerdictSub.setText(
+            if (diy) com.fixmateai.R.string.diy_friendly_sub else com.fixmateai.R.string.hire_pro_sub
+        )
+    }
+
+    /** Renders the AI's DIY steps as a tickable checklist. */
+    private fun bindSteps(d: DiagnosisResult) {
+        binding.stepsContainer.removeAllViews()
+        val steps = d.stepsList
+        binding.headerSteps.show(steps.isNotEmpty())
+        steps.forEachIndexed { index, step ->
+            val cb = com.google.android.material.checkbox.MaterialCheckBox(this).apply {
+                text = "${index + 1}. $step"
+                textSize = 14f
+                setPadding(0, 8, 0, 8)
+            }
+            binding.stepsContainer.addView(cb)
+        }
     }
 
     private fun resetServiceCard() {

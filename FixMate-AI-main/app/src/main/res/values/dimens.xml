@@ -4,6 +4,10 @@
     <dimen name="spacing_sm">8dp</dimen>
     <dimen name="spacing_md">16dp</dimen>
     <dimen name="spacing_lg">24dp</dimen>
-    <dimen name="card_corner">16dp</dimen>
-    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
+    <dimen name="card_corner">18dp</dimen>
+    <dimen name="card_elevation">3dp</dimen>
+    <dimen name="avatar_sm">44dp</dimen>
+    <dimen name="avatar_md">64dp</dimen>
+    <dimen name="avatar_lg">96dp</dimen>
 </resources>

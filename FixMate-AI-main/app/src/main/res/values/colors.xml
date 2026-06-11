@@ -6,15 +6,47 @@
     <color name="brand_secondary">#FF7043</color>
     <color name="brand_accent">#26A69A</color>
 
+    <!-- Gradient endpoints for headers (deep indigo → bright blue) -->
+    <color name="gradient_start">#1A237E</color>
+    <color name="gradient_end">#1E88E5</color>
+
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="gray_light">#F2F4F7</color>
     <color name="gray_medium">#9E9E9E</color>
+    <color name="surface">#FFFFFFFF</color>
+    <color name="surface_muted">#EEF2F7</color>
+    <color name="divider">#E3E8EF</color>
     <color name="text_primary">#1A1C1E</color>
     <color name="text_secondary">#5F6368</color>
+    <color name="text_on_brand">#FFFFFFFF</color>
+    <color name="text_on_brand_muted">#D6E2F5</color>
 
     <!-- Status colors -->
     <color name="status_pending">#F9A825</color>
     <color name="status_progress">#1565C0</color>
     <color name="status_resolved">#2E7D32</color>
+
+    <!-- Semantic / feature colors -->
+    <color name="success">#2E7D32</color>
+    <color name="success_light">#E6F4EA</color>
+    <color name="warning">#F9A825</color>
+    <color name="warning_light">#FEF6E0</color>
+    <color name="danger">#D32F2F</color>
+    <color name="info_light">#E3F0FF</color>
+    <color name="star">#FFB300</color>
+    <color name="verified">#1E88E5</color>
+    <color name="verified_bg">#E3F0FF</color>
+
+    <!-- Chat bubbles -->
+    <color name="bubble_sent">#1565C0</color>
+    <color name="bubble_received">#FFFFFFFF</color>
+    <color name="bubble_sent_text">#FFFFFFFF</color>
+    <color name="bubble_received_text">#1A1C1E</color>
+
+    <!-- Status chip backgrounds -->
+    <color name="chip_pending_bg">#FEF6E0</color>
+    <color name="chip_accepted_bg">#E3F0FF</color>
+    <color name="chip_completed_bg">#E6F4EA</color>
+    <color name="chip_declined_bg">#FBE3E3</color>
 </resources>

@@ -67,6 +67,8 @@ class ReportDetailActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnExportPdf.setOnClickListener { exportPdf() }
+
         binding.btnStatus.setOnClickListener { showStatusPicker() }
 
         binding.btnDelete.setOnClickListener {
@@ -77,6 +79,25 @@ class ReportDetailActivity : AppCompatActivity() {
                 .setNegativeButton("Cancel", null)
                 .show()
         }
+    }
+
+    private fun exportPdf() {
+        val d = report.diagnosis
+        com.fixmateai.utils.PdfExporter.exportAndShare(
+            this,
+            "Repair Report",
+            listOf(
+                "Damage" to d.damageTypeOrDefault,
+                "Date" to report.timestamp.toReadableDate(),
+                "Severity" to d.severityOrDefault,
+                "Urgency" to d.urgencyOrDefault,
+                "Summary" to d.summaryOrDefault,
+                "Possible Causes" to d.causesText,
+                "Recommended Repair" to d.recommendedRepairOrDefault,
+                "Required Tools" to d.toolsText,
+                "Safety Warnings" to d.safetyText
+            )
+        )
     }
 
     private fun showStatusPicker() {

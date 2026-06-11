@@ -13,6 +13,7 @@ import com.fixmateai.databinding.FragmentProfileBinding
 import com.fixmateai.ui.auth.LoginActivity
 import com.fixmateai.utils.Resource
 import com.fixmateai.utils.loadImage
+import com.fixmateai.utils.show
 import com.fixmateai.utils.toast
 import com.fixmateai.viewmodel.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,6 +44,15 @@ class ProfileFragment : Fragment() {
         binding.btnEditProfile.setOnClickListener {
             startActivity(Intent(requireContext(), EditProfileActivity::class.java))
         }
+        binding.btnRewards.setOnClickListener {
+            startActivity(Intent(requireContext(), com.fixmateai.ui.rewards.RewardsActivity::class.java))
+        }
+        binding.btnMyHome.setOnClickListener {
+            startActivity(Intent(requireContext(), com.fixmateai.ui.home.MyHomeActivity::class.java))
+        }
+        binding.btnAdmin.setOnClickListener {
+            startActivity(Intent(requireContext(), com.fixmateai.ui.admin.AdminVerifyActivity::class.java))
+        }
 
         binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
             viewModel.isDarkMode = isChecked
@@ -50,6 +60,11 @@ class ProfileFragment : Fragment() {
                 if (isChecked) AppCompatDelegate.MODE_NIGHT_YES
                 else AppCompatDelegate.MODE_NIGHT_NO
             )
+        }
+
+        binding.switchBiometric.isChecked = viewModel.biometricEnabled
+        binding.switchBiometric.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.biometricEnabled = isChecked
         }
 
         binding.btnLogout.setOnClickListener { confirmLogout() }
@@ -71,6 +86,7 @@ class ProfileFragment : Fragment() {
                     binding.tvEmail.text = state.data.email
                     binding.tvPhone.text = state.data.phone.ifBlank { "No phone added" }
                     binding.ivAvatar.loadImage(state.data.photoUrl)
+                    binding.btnAdmin.show(state.data.isAdmin)
                 }
                 is Resource.Error -> toast(state.message)
                 else -> Unit

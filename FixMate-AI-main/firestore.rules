@@ -1,9 +1,16 @@
 rules_version = '2';
 
 // Firebase Firestore security rules for FixMate AI.
-// Each user can only read/write their own data.
+// Customers own their data; providers are publicly browsable; service requests
+// and their chat are shared between the customer and the provider on the doc.
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // True if the signed-in user's profile has isAdmin == true.
+    function isAdmin() {
+      return request.auth != null
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
 
     // Users: a user can only read/write their own profile document.
     match /users/{userId} {
@@ -18,9 +25,63 @@ service cloud.firestore {
         && request.resource.data.userId == request.auth.uid;
     }
 
-    // Messages: owner-only access.
+    // Outreach messages (generated drafts): owner-only access.
     match /messages/{messageId} {
       allow read, delete, update: if request.auth != null
+        && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null
+        && request.resource.data.userId == request.auth.uid;
+    }
+
+    // Provider profiles: any signed-in user can read them (the directory);
+    // only the provider can create/update their own document.
+    match /providers/{providerId} {
+      allow read: if request.auth != null;
+      allow create, update: if request.auth != null && request.auth.uid == providerId;
+      // The reviewing customer may update only the rating aggregate (in a txn).
+      allow update: if request.auth != null
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['ratingAvg', 'ratingCount']);
+      // An admin may update only the verified flag.
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['verified']);
+    }
+
+    // Service requests: readable/updatable by the customer or the provider on
+    // the document; only the customer can create it.
+    match /service_requests/{requestId} {
+      allow read, update: if request.auth != null
+        && (resource.data.customerId == request.auth.uid
+            || resource.data.providerId == request.auth.uid);
+      allow create: if request.auth != null
+        && request.resource.data.customerId == request.auth.uid;
+
+      // Chat messages: accessible to either participant of the parent request.
+      match /messages/{messageId} {
+        allow read, create, update: if request.auth != null
+          && (get(/databases/$(database)/documents/service_requests/$(requestId)).data.customerId == request.auth.uid
+              || get(/databases/$(database)/documents/service_requests/$(requestId)).data.providerId == request.auth.uid);
+      }
+    }
+
+    // Reviews: any signed-in user can read; only the reviewing customer creates.
+    match /reviews/{reviewId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+        && request.resource.data.customerId == request.auth.uid;
+    }
+
+    // Notifications: the recipient reads/updates; any signed-in user may create
+    // one (the other participant writes notifications addressed to you).
+    match /notifications/{notificationId} {
+      allow read, update: if request.auth != null
+        && resource.data.recipientId == request.auth.uid;
+      allow create: if request.auth != null;
+    }
+
+    // Home inventory: strictly owner-only.
+    match /home_items/{itemId} {
+      allow read, update, delete: if request.auth != null
         && resource.data.userId == request.auth.uid;
       allow create: if request.auth != null
         && request.resource.data.userId == request.auth.uid;

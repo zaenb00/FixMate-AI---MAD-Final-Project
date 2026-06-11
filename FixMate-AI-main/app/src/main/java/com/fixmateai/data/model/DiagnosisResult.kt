@@ -21,11 +21,19 @@ data class DiagnosisResult(
     @SerializedName("requiredTools") val requiredTools: List<String>? = null,
     @SerializedName("safetyWarnings") val safetyWarnings: List<String>? = null,
     @SerializedName("suggestedTradesperson") val suggestedTradesperson: String? = null,
-    @SerializedName("summary") val summary: String? = null
+    @SerializedName("summary") val summary: String? = null,
+    /** Ordered DIY repair steps, rendered as a checklist on the diagnosis screen. */
+    @SerializedName("steps") val steps: List<String>? = null,
+    /** Whether a confident DIYer could reasonably tackle this themselves. */
+    @SerializedName("canDiy") val canDiy: Boolean? = null
 ) : Parcelable {
 
     // --- Null-safe accessors for the UI ---
     val damageTypeOrDefault: String get() = damageType?.takeIf { it.isNotBlank() } ?: "Unknown"
+    val stepsList: List<String> get() = steps?.filter { it.isNotBlank() } ?: emptyList()
+    /** True when the AI says DIY is reasonable AND severity isn't critical/high. */
+    val isDiyFriendly: Boolean
+        get() = (canDiy == true) && severity?.lowercase() !in listOf("critical", "high")
     val severityOrDefault: String get() = severity?.takeIf { it.isNotBlank() } ?: "Unknown"
     val urgencyOrDefault: String get() = urgency?.takeIf { it.isNotBlank() } ?: "Unknown"
     val summaryOrDefault: String get() = summary?.takeIf { it.isNotBlank() } ?: "No summary provided."

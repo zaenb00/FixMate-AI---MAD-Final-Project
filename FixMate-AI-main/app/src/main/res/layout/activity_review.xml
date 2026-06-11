@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray_light">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/brand_primary"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="@string/leave_review"
+        app:titleTextColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/spacing_lg">
+
+        <TextView
+            android:id="@+id/tvProvider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Star row -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/star1"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ic_star_outline"
+                android:contentDescription="@string/reviews" />
+
+            <ImageView
+                android:id="@+id/star2"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ic_star_outline"
+                android:contentDescription="@string/reviews" />
+
+            <ImageView
+                android:id="@+id/star3"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ic_star_outline"
+                android:contentDescription="@string/reviews" />
+
+            <ImageView
+                android:id="@+id/star4"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ic_star_outline"
+                android:contentDescription="@string/reviews" />
+
+            <ImageView
+                android:id="@+id/star5"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:src="@drawable/ic_star_outline"
+                android:contentDescription="@string/reviews" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:hint="@string/review_hint">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etComment"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:text="@string/submit_review" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

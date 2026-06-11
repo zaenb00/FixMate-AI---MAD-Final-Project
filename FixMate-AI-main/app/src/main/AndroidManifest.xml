@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <!-- Reading images from the gallery. READ_MEDIA_IMAGES for API 33+, the
          legacy READ_EXTERNAL_STORAGE for older devices (capped at API 32). -->
@@ -48,18 +50,39 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.onboarding.OnboardingActivity" android:exported="false" />
         <activity android:name=".ui.auth.LoginActivity" android:exported="false" />
         <activity android:name=".ui.auth.SignupActivity" android:exported="false" />
         <activity android:name=".ui.auth.ForgotPasswordActivity" android:exported="false" />
 
         <activity android:name=".ui.home.HomeActivity" android:exported="false" />
+        <activity android:name=".ui.provider.ProviderHomeActivity" android:exported="false" />
+        <activity android:name=".ui.provider.ProviderEditProfileActivity" android:exported="false" />
+
+        <activity android:name=".ui.assistant.ChatbotActivity" android:exported="false" />
+        <activity android:name=".ui.notifications.NotificationsActivity" android:exported="false" />
+        <activity android:name=".ui.rewards.RewardsActivity" android:exported="false" />
+        <activity android:name=".ui.home.MyHomeActivity" android:exported="false" />
+        <activity android:name=".ui.admin.AdminVerifyActivity" android:exported="false" />
 
         <activity android:name=".ui.diagnosis.CameraActivity" android:exported="false" />
         <activity android:name=".ui.diagnosis.DiagnosisActivity" android:exported="false" />
         <activity android:name=".ui.diagnosis.MessageGeneratorActivity" android:exported="false" />
 
         <activity android:name=".ui.history.ReportDetailActivity" android:exported="false" />
+        <activity android:name=".ui.history.HistoryActivity" android:exported="false" />
+        <activity android:name=".ui.stores.StoresActivity" android:exported="false" />
         <activity android:name=".ui.profile.EditProfileActivity" android:exported="false" />
+
+        <!-- Marketplace: directory, requests, chat, reviews -->
+        <activity android:name=".ui.directory.ProviderDirectoryActivity" android:exported="false" />
+        <activity android:name=".ui.directory.ProviderDetailActivity" android:exported="false" />
+        <activity android:name=".ui.requests.CreateRequestActivity" android:exported="false" />
+        <activity android:name=".ui.requests.ReviewActivity" android:exported="false" />
+        <activity
+            android:name=".ui.chat.ChatActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- FileProvider lets CameraX/the camera write to a shareable, secure URI. -->
         <provider

@@ -45,6 +45,37 @@ object ImageUtils {
     fun toBase64(imageBytes: ByteArray): String =
         Base64.encodeToString(imageBytes, Base64.NO_WRAP)
 
+    /**
+     * Produces a small Base64 JPEG suitable for embedding directly in a Firestore
+     * document (chat photos, provider portfolio) — no Firebase Storage needed.
+     * Aggressively scaled/compressed to stay well under the 1MB document limit.
+     */
+    fun toSmallBase64(context: Context, uri: Uri): String? {
+        val bytes = compressImage(context, uri) ?: return null
+        val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size) ?: return null
+        val max = 600
+        val ratio = bmp.width.toFloat() / bmp.height.toFloat()
+        val (w, h) = if (bmp.width >= bmp.height) max to (max / ratio).toInt()
+        else (max * ratio).toInt() to max
+        val small = Bitmap.createScaledBitmap(bmp, w.coerceAtLeast(1), h.coerceAtLeast(1), true)
+        val out = ByteArrayOutputStream()
+        small.compress(Bitmap.CompressFormat.JPEG, 60, out)
+        if (small != bmp) bmp.recycle()
+        small.recycle()
+        return Base64.encodeToString(out.toByteArray(), Base64.NO_WRAP)
+    }
+
+    /** Decodes a Base64 string (from Firestore) back to a Bitmap for display. */
+    fun fromBase64(data: String?): Bitmap? {
+        if (data.isNullOrBlank()) return null
+        return try {
+            val bytes = Base64.decode(data, Base64.NO_WRAP)
+            BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
     // --- internals ---
 
     private fun decodeSampledBitmap(context: Context, uri: Uri): Bitmap? {

@@ -8,12 +8,85 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/brand_secondary</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="android:statusBarColor">@color/brand_primary_dark</item>
+        <item name="android:statusBarColor">@color/gradient_start</item>
+
+        <!-- Rounded, modern component shapes applied app-wide. -->
+        <item name="materialButtonStyle">@style/Widget.FixMate.Button</item>
+        <item name="textInputStyle">@style/Widget.FixMate.TextInput</item>
+        <item name="bottomNavigationStyle">@style/Widget.FixMate.BottomNav</item>
+        <item name="shapeAppearanceSmallComponent">@style/Shape.FixMate.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/Shape.FixMate.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/Shape.FixMate.Large</item>
+
+        <!-- Smooth activity transitions app-wide. -->
+        <item name="android:windowAnimationStyle">@style/Animation.FixMate.Activity</item>
     </style>
 
     <!-- Splash theme: a simple branded background while the app warms up. -->
     <style name="Theme.FixMateAI.Splash" parent="Theme.FixMateAI">
         <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+    <!-- ===================== Shapes ===================== -->
+    <style name="Shape.FixMate.Small" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">10dp</item>
+    </style>
+    <style name="Shape.FixMate.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">18dp</item>
+    </style>
+    <style name="Shape.FixMate.Large" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <!-- ===================== Components ===================== -->
+    <style name="Widget.FixMate.Button" parent="Widget.Material3.Button">
+        <item name="cornerRadius">14dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
+    <style name="Widget.FixMate.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">14dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.FixMate.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">@dimen/card_corner</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+        <item name="cardBackgroundColor">@color/surface</item>
+    </style>
+
+    <!-- Rounded outlined text inputs everywhere. -->
+    <style name="Widget.FixMate.TextInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">14dp</item>
+        <item name="boxCornerRadiusTopEnd">14dp</item>
+        <item name="boxCornerRadiusBottomStart">14dp</item>
+        <item name="boxCornerRadiusBottomEnd">14dp</item>
+        <item name="boxBackgroundColor">@color/surface</item>
+    </style>
+
+    <!-- Bottom navigation with a soft active pill. -->
+    <style name="Widget.FixMate.BottomNav" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">@color/surface</item>
+        <item name="elevation">12dp</item>
+        <item name="itemActiveIndicatorStyle">@style/FixMate.NavIndicator</item>
+    </style>
+
+    <style name="FixMate.NavIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/info_light</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+
+    <!-- App-wide activity transition (gentle fade + slide). -->
+    <style name="Animation.FixMate.Activity" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
 </resources>

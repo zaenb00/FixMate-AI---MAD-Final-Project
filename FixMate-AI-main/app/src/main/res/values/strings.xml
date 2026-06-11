@@ -88,4 +88,135 @@
     <!-- Misc -->
     <string name="capture">Capture</string>
     <string name="close">Close</string>
+
+    <!-- ============ Service providers & marketplace ============ -->
+    <!-- Account type -->
+    <string name="account_type">I am a…</string>
+    <string name="role_customer">Homeowner</string>
+    <string name="role_provider">Service Provider</string>
+    <string name="role_customer_desc">Diagnose repairs &amp; hire pros</string>
+    <string name="role_provider_desc">Get hired &amp; answer requests</string>
+    <string name="trade">Trade / Profession</string>
+    <string name="city">City</string>
+    <string name="select_trade">Select your trade</string>
+
+    <!-- Customer dashboard cards -->
+    <string name="find_pros">Find a Pro</string>
+    <string name="my_requests">My Requests</string>
+    <string name="greeting">Hi there 👋</string>
+    <string name="dashboard_tagline">What needs fixing today?</string>
+
+    <!-- Directory -->
+    <string name="find_pros_title">Find a Pro</string>
+    <string name="search_pros">Search by name or trade</string>
+    <string name="all_trades">All</string>
+    <string name="no_providers">No providers found. Try another trade.</string>
+    <string name="verified_badge">Verified</string>
+    <string name="available_now">Available</string>
+    <string name="unavailable">Busy</string>
+    <string name="experience_years">%1$d yrs exp</string>
+    <string name="request_service">Request Service</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_reviews">No reviews yet.</string>
+    <string name="about">About</string>
+
+    <!-- Create request -->
+    <string name="new_request">New Service Request</string>
+    <string name="request_to">Request to %1$s</string>
+    <string name="request_title_hint">What do you need? (e.g. Leaking sink)</string>
+    <string name="request_desc_hint">Describe the problem…</string>
+    <string name="send_request">Send Request</string>
+    <string name="ai_cost_estimate">AI estimated cost</string>
+    <string name="estimating_cost">Estimating cost…</string>
+    <string name="request_sent">Request sent! Opening chat…</string>
+
+    <!-- Requests list -->
+    <string name="requests_title">Requests</string>
+    <string name="no_requests_customer">No requests yet. Find a pro to get started!</string>
+    <string name="no_requests_provider">No incoming requests yet.</string>
+    <string name="status_label">Status: %1$s</string>
+
+    <!-- Chat -->
+    <string name="chat">Chat</string>
+    <string name="type_message">Type a message…</string>
+    <string name="send">Send</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="mark_complete">Mark Complete</string>
+    <string name="leave_review">Leave a Review</string>
+    <string name="chat_empty">Say hello and describe what you need.</string>
+    <string name="request_accepted">Request accepted.</string>
+    <string name="request_declined">Request declined.</string>
+    <string name="request_completed">Marked as completed.</string>
+
+    <!-- Review -->
+    <string name="rate_provider">Rate %1$s</string>
+    <string name="review_hint">Share your experience (optional)</string>
+    <string name="submit_review">Submit Review</string>
+    <string name="review_thanks">Thanks for your review!</string>
+
+    <!-- Provider dashboard -->
+    <string name="provider_dashboard">Dashboard</string>
+    <string name="provider_greeting">Welcome back 👋</string>
+    <string name="im_available">Accepting new requests</string>
+    <string name="stat_pending">Pending</string>
+    <string name="stat_active">Active</string>
+    <string name="stat_completed">Completed</string>
+    <string name="my_rating">My Rating</string>
+
+    <!-- Provider nav -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_requests">Requests</string>
+    <string name="nav_pros">Find Pros</string>
+
+    <!-- Diagnosis → pro -->
+    <string name="send_to_pro">Send to a Pro</string>
+
+    <!-- AI assistant -->
+    <string name="ask_fixmate">Ask FixMate AI</string>
+    <string name="ask_fixmate_sub">Chat with our repair assistant</string>
+    <string name="repair_steps">Step-by-step Repair</string>
+    <string name="diy_friendly_title">You can likely DIY this 🛠</string>
+    <string name="diy_friendly_sub">Follow the steps below, or ask FixMate for help.</string>
+    <string name="hire_pro_title">Best left to a professional</string>
+    <string name="hire_pro_sub">This looks tricky or unsafe — hire a verified pro.</string>
+
+    <!-- Marketplace depth -->
+    <string name="in_progress">In Progress</string>
+    <string name="urgent">URGENT</string>
+    <string name="mark_urgent">Mark as urgent</string>
+    <string name="preferred_time">Preferred date &amp; time</string>
+    <string name="pick_datetime">Pick a date &amp; time</string>
+    <string name="send_quote">Send Quote</string>
+    <string name="quote_amount">Quote amount</string>
+    <string name="quote_label">Quote: %1$s</string>
+    <string name="accept_quote">Accept Quote</string>
+    <string name="quote_accepted">Quote accepted</string>
+    <string name="start_job">Start Job</string>
+    <string name="portfolio">Recent Work</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="saved">Saved</string>
+    <string name="distance_km">%1$.1f km away</string>
+
+    <!-- Engagement -->
+    <string name="notifications">Notifications</string>
+    <string name="no_notifications">You\'re all caught up 🎉</string>
+    <string name="rewards">Rewards</string>
+    <string name="your_points">Your points</string>
+    <string name="referral_code">Your referral code</string>
+    <string name="points_value">%1$d pts</string>
+
+    <!-- Utility -->
+    <string name="my_home">My Home</string>
+    <string name="add_item">Add Item</string>
+    <string name="no_home_items">Add your appliances to track repairs &amp; warranties.</string>
+    <string name="warranty_until">Warranty until %1$s</string>
+    <string name="warranty_expiring">Warranty expiring soon</string>
+    <string name="maintenance_tips">Seasonal Tips</string>
+    <string name="export_pdf">Export PDF</string>
+    <string name="verify_providers">Verify Providers</string>
+    <string name="verified_toggle">Verified</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
 </resources>

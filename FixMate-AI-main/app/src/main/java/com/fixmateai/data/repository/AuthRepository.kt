@@ -1,5 +1,6 @@
 package com.fixmateai.data.repository
 
+import com.fixmateai.data.model.ServiceProvider
 import com.fixmateai.data.model.User
 import com.fixmateai.utils.Constants
 import com.fixmateai.utils.Resource
@@ -27,27 +28,75 @@ class AuthRepository @Inject constructor(
 
     fun isLoggedIn(): Boolean = auth.currentUser != null
 
-    /** Creates an account, then writes the initial profile to Firestore. */
-    suspend fun signUp(name: String, email: String, password: String): Resource<FirebaseUser> {
+    /**
+     * Creates an account, then writes the initial profile to Firestore. When the
+     * chosen [role] is "provider", a matching public [ServiceProvider] document is
+     * also created so the account immediately appears in the customer directory.
+     */
+    suspend fun signUp(
+        name: String,
+        email: String,
+        password: String,
+        role: String = User.ROLE_CUSTOMER,
+        trade: String = "",
+        city: String = ""
+    ): Resource<FirebaseUser> {
         return try {
             val result = auth.createUserWithEmailAndPassword(email, password).await()
             val firebaseUser = result.user
                 ?: return Resource.Error("Sign up failed: no user returned.")
 
+            val now = System.currentTimeMillis()
             val user = User(
                 uid = firebaseUser.uid,
                 name = name,
                 email = email,
-                createdAt = System.currentTimeMillis()
+                role = role,
+                referralCode = "FIX-" + firebaseUser.uid.takeLast(5).uppercase(),
+                points = 50, // welcome bonus
+                createdAt = now
             )
             firestore.collection(Constants.COLLECTION_USERS)
                 .document(firebaseUser.uid)
                 .set(user)
                 .await()
 
+            // Providers get a public profile document used by the directory.
+            if (role == User.ROLE_PROVIDER) {
+                val provider = ServiceProvider(
+                    uid = firebaseUser.uid,
+                    name = name,
+                    email = email,
+                    trade = trade,
+                    city = city,
+                    createdAt = now
+                )
+                firestore.collection(Constants.COLLECTION_PROVIDERS)
+                    .document(firebaseUser.uid)
+                    .set(provider)
+                    .await()
+            }
+
             Resource.Success(firebaseUser)
         } catch (e: Exception) {
             Resource.Error(e.localizedMessage ?: "Sign up failed.", e)
+        }
+    }
+
+    /**
+     * Reads the signed-in user's role from Firestore. Falls back to "customer" so
+     * the app always has a safe destination to route to.
+     */
+    suspend fun fetchUserRole(): String {
+        val userId = currentUser?.uid ?: return User.ROLE_CUSTOMER
+        return try {
+            val snapshot = firestore.collection(Constants.COLLECTION_USERS)
+                .document(userId)
+                .get()
+                .await()
+            snapshot.getString("role")?.takeIf { it.isNotBlank() } ?: User.ROLE_CUSTOMER
+        } catch (e: Exception) {
+            User.ROLE_CUSTOMER
         }
     }
 

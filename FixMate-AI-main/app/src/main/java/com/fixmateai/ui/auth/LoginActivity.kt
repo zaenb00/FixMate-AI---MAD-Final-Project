@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.fixmateai.data.model.User
 import com.fixmateai.databinding.ActivityLoginBinding
 import com.fixmateai.ui.home.HomeActivity
+import com.fixmateai.ui.provider.ProviderHomeActivity
 import com.fixmateai.utils.Resource
 import com.fixmateai.utils.show
 import com.fixmateai.utils.toast
@@ -13,8 +15,9 @@ import com.fixmateai.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
- * Email/password login screen. Observes [AuthViewModel.authState] and navigates
- * to Home on success. Uses ViewBinding (no findViewById).
+ * Email/password login screen. Observes [AuthViewModel.authState], then resolves
+ * the account role to navigate to the correct dashboard (customer vs provider).
+ * Uses ViewBinding (no findViewById).
  */
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -53,17 +56,27 @@ class LoginActivity : AppCompatActivity() {
 
             when (state) {
                 is Resource.Success -> {
-                    toast("Welcome back!")
-                    goToHome()
+                    // Resolve the role before navigating to the right dashboard.
+                    viewModel.resolveRole()
                 }
                 is Resource.Error -> toast(state.message)
                 else -> Unit
             }
         }
+
+        viewModel.roleState.observe(this) { role ->
+            toast("Welcome back!")
+            goToDashboard(role)
+        }
     }
 
-    private fun goToHome() {
-        val intent = Intent(this, HomeActivity::class.java).apply {
+    private fun goToDashboard(role: String) {
+        val destination = if (role == User.ROLE_PROVIDER) {
+            ProviderHomeActivity::class.java
+        } else {
+            HomeActivity::class.java
+        }
+        val intent = Intent(this, destination).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)

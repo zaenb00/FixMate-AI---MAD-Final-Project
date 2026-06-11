@@ -100,6 +100,59 @@
                         android:layout_marginTop="@dimen/spacing_sm"
                         android:textColor="@color/text_secondary" />
 
+                    <!-- DIY-vs-hire verdict banner -->
+                    <LinearLayout
+                        android:id="@+id/verdictBanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/bg_pill"
+                        android:backgroundTint="@color/success_light"
+                        android:padding="@dimen/spacing_md"
+                        android:visibility="gone">
+                        <ImageView
+                            android:id="@+id/ivVerdict"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_pro"
+                            android:contentDescription="@string/diy_friendly_title" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_md"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tvVerdictTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_primary"
+                                android:textStyle="bold"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:id="@+id/tvVerdictSub"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Step-by-step DIY checklist -->
+                    <TextView
+                        android:id="@+id/headerSteps"
+                        style="@style/SectionHeader"
+                        android:text="@string/repair_steps"
+                        android:visibility="gone" />
+                    <LinearLayout
+                        android:id="@+id/stepsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/spacing_xs" />
+
                     <TextView
                         android:id="@+id/headerCauses"
                         style="@style/SectionHeader"
@@ -214,10 +267,21 @@
                 android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnGenerateMessage"
+                android:id="@+id/btnSendToPro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_md"
+                android:text="@string/send_to_pro"
+                app:icon="@drawable/ic_pro"
+                app:iconGravity="textStart"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGenerateMessage"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:text="@string/generate_message"
                 android:visibility="gone" />
 

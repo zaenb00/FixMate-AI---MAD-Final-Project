@@ -10,6 +10,24 @@ object Constants {
     const val COLLECTION_USERS = "users"
     const val COLLECTION_REPORTS = "repair_reports"
     const val COLLECTION_MESSAGES = "messages"
+    const val COLLECTION_PROVIDERS = "providers"
+    const val COLLECTION_REQUESTS = "service_requests"
+    const val COLLECTION_REVIEWS = "reviews"
+    const val COLLECTION_NOTIFICATIONS = "notifications"
+    const val COLLECTION_HOME_ITEMS = "home_items"
+    // Chat lives in a subcollection of each service request document.
+    const val SUBCOLLECTION_CHAT = "messages"
+
+    // ---- Trades a service provider can offer (also used as directory filters) ----
+    val TRADES = listOf(
+        "Plumber",
+        "Electrician",
+        "Carpenter",
+        "Painter",
+        "AC & Heating",
+        "Appliance Repair",
+        "General Handyman"
+    )
 
     // ---- Firebase Storage folders ----
     const val STORAGE_DAMAGE_IMAGES = "damage_images"
@@ -42,6 +60,11 @@ object Constants {
     const val EXTRA_DIAGNOSIS = "extra_diagnosis"
     const val EXTRA_MESSAGE_TEXT = "extra_message_text"
     const val EXTRA_STORE = "extra_store"
+    const val EXTRA_PROVIDER = "extra_provider"
+    const val EXTRA_REQUEST = "extra_request"
+    const val EXTRA_TRADE_FILTER = "extra_trade_filter"
+    const val EXTRA_DIAGNOSIS_SUMMARY = "extra_diagnosis_summary"
+    const val EXTRA_COST_ESTIMATE = "extra_cost_estimate"
 
     // ---- The prompt sent to Gemini for damage diagnosis ----
     val DIAGNOSIS_PROMPT = """
@@ -59,9 +82,25 @@ object Constants {
           "requiredTools": ["tool 1", "tool 2"],
           "safetyWarnings": ["warning 1", "warning 2"],
           "suggestedTradesperson": "plumber | electrician | carpenter | general handyman | etc.",
-          "summary": "one sentence plain-language summary"
+          "summary": "one sentence plain-language summary",
+          "steps": ["short DIY step 1", "short DIY step 2", "..."],
+          "canDiy": true
         }
+        "steps" must be a concise ordered list a homeowner can follow. Set "canDiy"
+        to true only if a confident DIYer could safely do it without a licensed pro.
         If the image does not show repairable home damage, set damageType to
         "No damage detected" and explain in the summary.
+    """.trimIndent()
+
+    // ---- Prompt for the AI cost estimate (bonus feature) ----
+    // Asks the model for a short price range only, so it can be shown inline on a
+    // service request. Currency-agnostic; the model picks a sensible local-feeling
+    // range from the repair description.
+    val COST_ESTIMATE_PROMPT = """
+        You are a home-repair cost estimator. Given the repair below, reply with ONLY
+        a short typical price range a tradesperson might charge (labour + basic
+        materials), like "$80 - $150". No explanation, no extra words, max 20 characters.
+
+        Repair:
     """.trimIndent()
 }

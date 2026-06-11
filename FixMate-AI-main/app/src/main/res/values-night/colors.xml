@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Dark-mode overrides. Only the surface/background/text/chip colours flip;
+      the vivid brand + gradient colours stay the same so headers keep their pop.
+      `white` is intentionally NOT overridden (it is used for text-on-gradient).
+    -->
+    <color name="gray_light">#0F1115</color>
+    <color name="surface">#1A1C22</color>
+    <color name="surface_muted">#23262E</color>
+    <color name="divider">#2D313B</color>
+
+    <color name="text_primary">#ECEEF2</color>
+    <color name="text_secondary">#AAB0BB</color>
+
+    <!-- Chip / soft backgrounds, darkened -->
+    <color name="info_light">#16314F</color>
+    <color name="success_light">#16331F</color>
+    <color name="warning_light">#3A300F</color>
+    <color name="verified_bg">#16314F</color>
+
+    <color name="chip_pending_bg">#3A300F</color>
+    <color name="chip_accepted_bg">#16314F</color>
+    <color name="chip_completed_bg">#16331F</color>
+    <color name="chip_declined_bg">#3A1B1B</color>
+
+    <!-- Chat bubbles -->
+    <color name="bubble_received">#23262E</color>
+    <color name="bubble_received_text">#ECEEF2</color>
+</resources>

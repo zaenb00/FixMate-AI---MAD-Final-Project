@@ -56,6 +56,39 @@ class UserRepository @Inject constructor(
         }
     }
 
+    /** Adds or removes a provider from the user's saved favourites. */
+    suspend fun toggleFavorite(providerId: String, isFavorite: Boolean): Resource<Unit> {
+        val userId = uid() ?: return Resource.Error("Not signed in.")
+        return try {
+            val op = if (isFavorite) {
+                com.google.firebase.firestore.FieldValue.arrayUnion(providerId)
+            } else {
+                com.google.firebase.firestore.FieldValue.arrayRemove(providerId)
+            }
+            firestore.collection(Constants.COLLECTION_USERS)
+                .document(userId)
+                .update("favorites", op)
+                .await()
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e.localizedMessage ?: "Failed to update favourites.", e)
+        }
+    }
+
+    /** Adjusts the user's loyalty points by [delta] (best-effort). */
+    suspend fun addPoints(delta: Int): Resource<Unit> {
+        val userId = uid() ?: return Resource.Error("Not signed in.")
+        return try {
+            firestore.collection(Constants.COLLECTION_USERS)
+                .document(userId)
+                .update("points", com.google.firebase.firestore.FieldValue.increment(delta.toLong()))
+                .await()
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e.localizedMessage ?: "Failed to update points.", e)
+        }
+    }
+
     /**
      * Deletes the user's profile document and the Firebase Auth account.
      * Note: deleting an account may require a recent login; the UI surfaces

@@ -61,6 +61,62 @@ class DiagnosisRepository @Inject constructor(
         }
     }
 
+    /**
+     * Asks the AI for a short cost range for a repair (bonus feature). Text-only,
+     * best-effort: returns null on any problem so callers can simply omit the
+     * estimate rather than block the flow. Reuses the same provider switch as
+     * [diagnose].
+     */
+    suspend fun estimateCost(repairDescription: String): String? {
+        if (repairDescription.isBlank()) return null
+        if (!NetworkUtils.isOnline(context)) return null
+        val prompt = "${Constants.COST_ESTIMATE_PROMPT}\n$repairDescription"
+        return try {
+            val raw = when (BuildConfig.AI_PROVIDER.lowercase()) {
+                "gemini" -> estimateWithGemini(prompt)
+                else -> estimateWithGroq(prompt)
+            }
+            raw?.trim()?.replace("\n", " ")?.take(24)?.takeIf { it.isNotBlank() }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    private suspend fun estimateWithGroq(prompt: String): String? {
+        if (BuildConfig.GROQ_API_KEY.isBlank()) return null
+        // Plain-text response (not the json_object format used for diagnosis).
+        val request = GroqRequest(
+            model = Constants.GROQ_MODEL,
+            messages = listOf(
+                GroqRequest.Message(
+                    role = "user",
+                    content = listOf(GroqRequest.ContentPart(type = "text", text = prompt))
+                )
+            ),
+            responseFormat = GroqRequest.ResponseFormat(type = "text")
+        )
+        val response = groqApi.chatCompletions("Bearer ${BuildConfig.GROQ_API_KEY}", request)
+        if (!response.isSuccessful) return null
+        return response.body()?.firstText()
+    }
+
+    private suspend fun estimateWithGemini(prompt: String): String? {
+        if (BuildConfig.GEMINI_API_KEY.isBlank()) return null
+        val request = GeminiRequest(
+            contents = listOf(
+                GeminiRequest.Content(parts = listOf(GeminiRequest.Part(text = prompt)))
+            ),
+            generationConfig = GeminiRequest.GenerationConfig(responseMimeType = "text/plain")
+        )
+        val response = geminiApi.generateContent(
+            model = Constants.GEMINI_MODEL,
+            apiKey = BuildConfig.GEMINI_API_KEY,
+            request = request
+        )
+        if (!response.isSuccessful) return null
+        return response.body()?.firstText()
+    }
+
     // ---- Groq (default, free) ----
     private suspend fun diagnoseWithGroq(base64: String): Resource<DiagnosisResult> {
         if (BuildConfig.GROQ_API_KEY.isBlank()) {
@@ -73,6 +129,15 @@ class DiagnosisRepository @Inject constructor(
         )
         if (!response.isSuccessful) {
             val code = response.code()
+            if (code == 401) {
+                return Resource.Error(
+                    "Your Groq API key is invalid or expired. Get a free key at " +
+                        "console.groq.com/keys and set GROQ_API_KEY in local.properties."
+                )
+            }
+            if (code == 429) {
+                return Resource.Error("Groq rate limit reached. Please wait a moment and try again.")
+            }
             val errorBody = response.errorBody()?.string().orEmpty()
             return Resource.Error("AI request failed ($code). $errorBody".trim())
         }

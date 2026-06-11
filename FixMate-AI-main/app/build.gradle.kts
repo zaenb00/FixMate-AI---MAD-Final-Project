@@ -88,6 +88,8 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.8.2")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.exifinterface:exifinterface:1.3.7")
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
+    implementation("androidx.biometric:biometric:1.1.0")
 
     // ---- Lifecycle / ViewModel (MVVM) ----
     val lifecycle = "2.8.4"

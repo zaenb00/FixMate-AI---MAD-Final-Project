@@ -45,3 +45,23 @@ fun Long.toReadableDate(): String {
 /** Basic email validation. */
 fun String.isValidEmail(): Boolean =
     android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
+/**
+ * Styles a TextView as a coloured status pill for a service-request status.
+ * Centralised here so the customer and provider lists look identical.
+ */
+fun android.widget.TextView.bindRequestStatus(status: String) {
+    val (bg, fg) = when (status) {
+        "Accepted" -> R.color.chip_accepted_bg to R.color.status_progress
+        "Completed" -> R.color.chip_completed_bg to R.color.success
+        "Declined" -> R.color.chip_declined_bg to R.color.danger
+        else -> R.color.chip_pending_bg to R.color.status_pending // Pending
+    }
+    text = status
+    setBackgroundResource(R.drawable.bg_pill)
+    backgroundTintList = android.content.res.ColorStateList.valueOf(
+        androidx.core.content.ContextCompat.getColor(context, bg)
+    )
+    setTextColor(androidx.core.content.ContextCompat.getColor(context, fg))
+    setPadding(24, 8, 24, 8)
+}
